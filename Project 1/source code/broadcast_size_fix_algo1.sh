@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=broadcast_size_fix1
+#SBATCH --job-name=bsf1
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=128
 #SBATCH --time=01:59:59

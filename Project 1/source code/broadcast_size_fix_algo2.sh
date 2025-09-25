@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=broadcast_size_fix2
+#SBATCH --job-name=bsf2
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=128
 #SBATCH --time=01:59:59
@@ -25,7 +25,7 @@ echo "idx_process,dimension_size,Latency" > ../results/broadcast_algo2_fixed_cor
 for idx_process in {2..256} # from 2 to 256 tasks (128 per node)
 do
     # Perform osu_bcast with current processors, fixed message dimension_size and fixed number of N_replica
-    result_broadcast2=$(mpirun --map-by core -np $idx_process --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 2 $OSU_BCAST -m $dimension_size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}') # osu_bcast with current processors, fixed message dimension_size and fixed number of N_replica
+    result_broadcast2=$(mpirun --map-by core -np $idx_process --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 3 $OSU_BCAST -m $dimension_size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}') # osu_bcast with current processors, fixed message dimension_size and fixed number of N_replica
     echo "$idx_process,$dimension_size,$result_broadcast2" >> ../results/broadcast_algo2_fixed_core.csv # CSV file to store results
 done
 # end algo 2
