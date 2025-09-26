@@ -1,8 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=OMP-STRIPS
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=128
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
 #SBATCH --time=02:00:00
 #SBATCH --partition=EPYC
 
