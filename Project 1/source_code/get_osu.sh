@@ -17,3 +17,7 @@ make -j
 
 echo "OSU benchmarks ready at: $(pwd)/c/mpi/collective/blocking/"
 echo "Test with: mpirun -np 2 ./c/mpi/collective/blocking/osu_bcast"
+
+# Define necessary folders
+mkdir -p slurm-output
+mkdir -p output/{broadcast_fixed, broadcast_var, reduce_fixed, reduce_var}

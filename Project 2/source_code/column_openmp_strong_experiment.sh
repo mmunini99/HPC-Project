@@ -13,7 +13,7 @@ module load openMPI/4.1.6
 mpicc -fopenmp parallel_on_columns_code.c -o parallel_on_columns_code -lm
 
 # output file
-OUTPUT_FILE="../results/omp-strong/omp_strong_columns.csv"
+OUTPUT_FILE="../output/strong_scaling_omp/omp_strong_columns.csv"
 echo "cores,threads,width,height,time" > "${OUTPUT_FILE}"
 
 # image parameters (same as benchmark)

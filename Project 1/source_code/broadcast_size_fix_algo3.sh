@@ -19,13 +19,13 @@ dimension_size=4
 
 
 # Algorithm n 3 -->
-echo "idx_process,dimension_size,Latency" > ../results/broadcast_algo3_fixed_core.csv # CSV file to store results
+echo "idx_process,dimension_size,Latency" > ../output/broadcast_fixed/broadcast_algo3_fixed_core.csv # CSV file to store results
 
 # Looping over the n of idx_process
 for idx_process in {2..256} # from 2 to 256 tasks (128 per node)
 do
     # Perform osu_bcast with current processors, fixed message dimension_size and fixed number of N_replica
     result_broadcast3=$(mpirun --map-by core -np $idx_process --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 5 $OSU_BCAST -m $dimension_size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}') # osu_bcast with current processors, fixed message dimension_size and fixed number of N_replica
-    echo "$idx_process,$dimension_size,$result_broadcast3" >> ../results/broadcast_algo3_fixed_core.csv # CSV file to store results
+    echo "$idx_process,$dimension_size,$result_broadcast3" >> ../output/broadcast_fixed/broadcast_algo3_fixed_core.csv # CSV file to store results
 done
 # end algo 3

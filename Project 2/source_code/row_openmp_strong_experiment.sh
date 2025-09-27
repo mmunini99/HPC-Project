@@ -12,7 +12,7 @@ module load openMPI/4.1.6
 mpicc -fopenmp parallel_on_rows_code.c -o parallel_on_rows_code -lm
 
 # output file
-OUTPUT_FILE="../results/omp-strong/omp_strong_rows.csv"
+OUTPUT_FILE="../output/strong_scaling_omp/omp_strong_rows.csv"
 echo "cores,threads,width,height,time" > "${OUTPUT_FILE}"
 
 # image parameters (same as benchmark)

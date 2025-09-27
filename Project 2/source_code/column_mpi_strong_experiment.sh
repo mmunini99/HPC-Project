@@ -13,7 +13,7 @@ module load openMPI/4.1.6
 mpicc -fopenmp parallel_on_columns_code.c -o parallel_on_columns_code -lm
 
 # --- strong-scaling loop ---
-OUTPUT_FILE="../results/mpi-strong/mpi_strong_columns.csv"
+OUTPUT_FILE="../output/strong_scaling_mpi/mpi_strong_columns.csv"
 echo "cores,threads,width,height,time" > "${OUTPUT_FILE}"
 
 export OMP_NUM_THREADS=1          # keep 1 OMP thread --> for the rank

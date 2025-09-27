@@ -10,20 +10,20 @@ module load openMPI/4.1.6
 
 # OSU Benchmark path 
 OSU_BENCHMARK_DIR="osu-micro-benchmarks-7.4/c/mpi/collective/blocking"
-OSU_ALLREDUCE="$OSU_BENCHMARK_DIR/osu_reduce"
+OSU_REDUCE="$OSU_BENCHMARK_DIR/osu_reduce"
 
 # Parameters definition
 N_replica=5000
 dimension_size=4
 
 # Algorithm n 1 --> 
-echo "idx_process,dimension_size,Latency" > ../results/reduce_algo1_fixed_core.csv # CSV file to store results
+echo "idx_process,dimension_size,Latency" > ../output/reduce_fixed/reduce_algo1_fixed_core.csv # CSV file to store results
 
 # Looping over the n of idx_process
 for idx_process in {2..256} # from 2 to 256 tasks (128 per node)
 do
-    result_allreduce1=$(mpirun --map-by core -np $idx_process --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_reduce_algorithm 1 $OSU_ALLREDUCE -m $dimension_size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}') # osu_allreduce with current processors, fixed message dimension_size and fixed number of N_replica
-    echo "$idx_process,$dimension_size,$result_allreduce1" >> ../results/reduce_algo1_fixed_core.csv # CSV file to store results
+    result_allreduce1=$(mpirun --map-by core -np $idx_process --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_reduce_algorithm 1 $OSU_REDUCE -m $dimension_size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}') # osu_allreduce with current processors, fixed message dimension_size and fixed number of N_replica
+    echo "$idx_process,$dimension_size,$result_allreduce1" >> ../output/reduce_fixed/reduce_algo1_fixed_core.csv # CSV file to store results
 done
 # end algo 1
 

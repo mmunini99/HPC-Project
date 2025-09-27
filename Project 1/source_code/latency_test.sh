@@ -15,23 +15,28 @@
 module purge
 module load openMPI/4.1.6
 
+# OSU benchmark path
+OSU_BENCHMARK_DIR="osu-micro-benchmarks-7.4/c/mpi/pt2pt/standard"
+OSU_LATENCY="$OSU_BENCHMARK_DIR/osu_latency"
+
 echo "Running from: ${SLURM_SUBMIT_DIR}"
 cd "${SLURM_SUBMIT_DIR}"
 
 # Output file
-dt=$(date +"%Y%m%d_%H%M%S")
-outfile="../results/latency.txt"
+outfile="../output/latency.txt"
+# Basically always used core 0 as REFERENCE POINT like
 echo "# Latency: core 0 vs distant cores (exclusive)" > "$outfile"
 
-# Architecturally meaningful core distances
+
+# Core to test against core0
 for i in 1 4 8 16 32 64 96 112 127; do
     echo "Testing with cores: 0 and $i" | tee -a "$outfile"
 
     # Create rankfile for explicit core binding
     echo -e "rank 0=localhost slot=0\nrank 1=localhost slot=$i" > rankfile_$i
 
-    # Run benchmark with explicit mapping
+    # Benchmarking --> tests only 2-byte messages
     mpirun --map-by rankfile:file=rankfile_$i \
-        ./osu-micro-benchmarks-7.4/c/mpi/pt2pt/standard/osu_latency \
-        -x 100 -i 1000 -m 2:2 2>&1 | tee -a "$outfile"
+         $OSU_LATENCY \
+        -x 100 -i 1000 -m 2:2 2>&1 | tee -a "$outfile" # running for 100 warmup iterations and 1000 measurement iterations
 done

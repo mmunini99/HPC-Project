@@ -11,7 +11,7 @@ module load openMPI/4.1.6
 
 mpicc -fopenmp parallel_on_columns_code.c -o parallel_on_columns_code -lm
 
-OUTPUT_FILE="../results/omp-weak/omp_weak_columns.csv"
+OUTPUT_FILE="../output/weak_scaling_omp/omp_weak_columns.csv"
 echo "cores,threads,width,height,time" > "${OUTPUT_FILE}"
 
 X_LEFT=-2.0

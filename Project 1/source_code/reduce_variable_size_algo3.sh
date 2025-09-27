@@ -10,14 +10,14 @@ module load openMPI/4.1.6
 
 # OSU Benchmark path 
 OSU_BENCHMARK_DIR="osu-micro-benchmarks-7.4/c/mpi/collective/blocking"
-OSU_ALLREDUCE="$OSU_BENCHMARK_DIR/osu_reduce"
+OSU_REDUCE="$OSU_BENCHMARK_DIR/osu_reduce"
 
 # Benchmarks parameters
 N_replica=5000
 
 
 # Algorithm n 3 --> 
-echo "number_processes,Size,Latency" > ../results/reduce_algo3_variable_core.csv
+echo "number_processes,Size,Latency" > ../output/reduce_var/reduce_algo3_variable_core.csv
 
 for idx_power in {1..8} # Looping from 2 --> 256
 do
@@ -25,8 +25,8 @@ do
 	for size_idx_dim in {1..10} # Looping from 2 --> 1024
 	do
 		size=$((2**size_idx_dim)) # variable dimension
-		result_allreduce3=$(mpirun --map-by core -np $number_processes --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_reduce_algorithm 4 $OSU_ALLREDUCE -m $size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}')
-		echo "$number_processes,$size,$result_allreduce3" >> ../results/reduce_algo3_variable_core.csv
+		result_allreduce3=$(mpirun --map-by core -np $number_processes --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_reduce_algorithm 4 $OSU_REDUCE -m $size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}')
+		echo "$number_processes,$size,$result_allreduce3" >> ../output/reduce_var/reduce_algo3_variable_core.csv
 	done
 done	
 #  end algo 3

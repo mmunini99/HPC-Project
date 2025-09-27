@@ -19,7 +19,7 @@ N_replica=5000
 
 
 # Algorithm n 2 --> 
-echo "number_processes,Size,Latency" > ../results/broadcast_algo2_variable_core.csv
+echo "number_processes,Size,Latency" > ../output/broadcast_var/broadcast_algo2_variable_core.csv
 
 for idx_power in {1..8} # Looping from 2 --> 256
 do
@@ -28,7 +28,7 @@ do
 	do
 		size=$((2**size_idx_dim)) # variable dimension
 		result_broadcast2=$(mpirun --map-by core -np $number_processes --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 3 $OSU_BCAST -m $size -x $N_replica -i $N_replica | tail -n 1 | awk '{print $2}')
-		echo "$number_processes,$size,$result_broadcast2" >> ../results/broadcast_algo2_variable_core.csv
+		echo "$number_processes,$size,$result_broadcast2" >> ../output/broadcast_var/broadcast_algo2_variable_core.csv
 	done
 done	
 #  end algo 2
